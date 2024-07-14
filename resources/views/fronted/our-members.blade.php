@@ -30,67 +30,13 @@
         </div>
 
         <div class="row">
-
+          @foreach($user as $k=> $usr)
           <div class="col-xl-3 col-lg-4 col-md-6 col-6 col-sm-6">
-            <div class="member" data-aos="zoom-in" data-aos-delay="100">
-              <img src="{{url('fronted_assets/img/team/faruk.png')}}" class="img-fluid" alt="">
+            <div class="member">
+              <img src="{{url('backend_assets/img/member_profile/'.$usr->profile_img)}}" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>Md Farook</h4>
-                  <span>Founder & Member</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xl-3 col-lg-4 col-md-6 col-6 col-sm-6" data-wow-delay="0.1s">
-            <div class="member" data-aos="zoom-in" data-aos-delay="200">
-              <img src="{{url('fronted_assets/img/team/danish.png')}}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Md Danish</h4>
-                  <span>Founder & Member</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xl-3 col-lg-4 col-md-6 col-6 col-sm-6" data-wow-delay="0.1s">
-            <div class="member" data-aos="zoom-in" data-aos-delay="200">
-              <img src="{{url('fronted_assets/img/team/ladhale.png')}}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Md Ladhale</h4>
-                  <span>Founder & Member</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xl-3 col-lg-4 col-md-6 col-6 col-sm-6" data-wow-delay="0.2s">
-            <div class="member" data-aos="zoom-in" data-aos-delay="300">
-              <img src="{{url('fronted_assets/img/team/neyaz.png')}}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Md Neyaz Ahmad</h4>
+                  <h4>{{ucwords($usr->fname." ".$usr->lname)}}</h4>
                   <span>Member</span>
                 </div>
                 <div class="social">
@@ -102,25 +48,7 @@
               </div>
             </div>
           </div>
-
-          <div class="col-xl-3 col-lg-4 col-md-6 col-6 col-sm-6" data-wow-delay="0.3s">
-            <div class="member" data-aos="zoom-in" data-aos-delay="400">
-              <img src="{{url('fronted_assets/img/team/ibne.png')}}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Ibne Ali</h4>
-                  <span>Member</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
+            @endforeach
         </div>
 
       </div>

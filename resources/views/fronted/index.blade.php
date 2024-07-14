@@ -193,70 +193,17 @@
           <div class="row mx-auto my-auto justify-content-center">
             <div id="myCarousel" class="carousel team-carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active">
+                @php
+                    $i=1;
+                @endphp
+                @foreach($user as $k=> $usr)
+                <div class="carousel-item {{($i==1) ? 'active' : ''}}">
                   <div class="col-md-3">
                     <div class="member">
-                      <img src="{{url('fronted_assets/img/team/faruk.png')}}" class="img-fluid" alt="">
+                      <img src="{{url('backend_assets/img/member_profile/'.$usr->profile_img)}}" class="img-fluid" alt="">
                       <div class="member-info">
                         <div class="member-info-content">
-                          <h4>Md Farook</h4>
-                          <span>Founder & Member</span>
-                        </div>
-                        <div class="social">
-                          <a href=""><i class="bi bi-twitter"></i></a>
-                          <a href=""><i class="bi bi-facebook"></i></a>
-                          <a href=""><i class="bi bi-instagram"></i></a>
-                          <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="col-md-3">
-                    <div class="member">
-                      <img src="{{url('fronted_assets/img/team/danish.png')}}" class="img-fluid" alt="">
-                      <div class="member-info">
-                        <div class="member-info-content">
-                          <h4>Md Danish</h4>
-                          <span>Founder & Member</span>
-                        </div>
-                        <div class="social">
-                          <a href=""><i class="bi bi-twitter"></i></a>
-                          <a href=""><i class="bi bi-facebook"></i></a>
-                          <a href=""><i class="bi bi-instagram"></i></a>
-                          <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="col-md-3">
-                    <div class="member">
-                      <img src="{{url('fronted_assets/img/team/ladhale.png')}}" class="img-fluid" alt="">
-                      <div class="member-info">
-                        <div class="member-info-content">
-                          <h4>Md Ladhale</h4>
-                          <span>Founder & Member</span>
-                        </div>
-                        <div class="social">
-                          <a href=""><i class="bi bi-twitter"></i></a>
-                          <a href=""><i class="bi bi-facebook"></i></a>
-                          <a href=""><i class="bi bi-instagram"></i></a>
-                          <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="col-md-3">
-                    <div class="member">
-                      <img src="{{url('fronted_assets/img/team/neyaz.png')}}" class="img-fluid" alt="">
-                      <div class="member-info">
-                        <div class="member-info-content">
-                          <h4>Md Neyaz</h4>
+                          <h4>{{ucwords($usr->fname." ".$usr->lname)}}</h4>
                           <span>Member</span>
                         </div>
                         <div class="social">
@@ -268,26 +215,11 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="col-md-3">
-                    <div class="member">
-                      <img src="{{url('fronted_assets/img/team/ibne.png')}}" class="img-fluid" alt="">
-                      <div class="member-info">
-                        <div class="member-info-content">
-                          <h4>Ibne Ali</h4>
-                          <span>Member</span>
-                        </div>
-                        <div class="social">
-                          <a href=""><i class="bi bi-twitter"></i></a>
-                          <a href=""><i class="bi bi-facebook"></i></a>
-                          <a href=""><i class="bi bi-instagram"></i></a>
-                          <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </div>   
+                @php
+                    $i+=1;
+                @endphp
+                @endforeach             
               </div>
               <a class="carousel-control-prev bg-transparent w-aut" href="#myCarousel" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -315,216 +247,49 @@
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
 
+            @foreach ($user as $k=> $usr)                
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{{url('fronted_assets/img/testimonials/faruk.png')}}" class="testimonial-img" alt="">
-                  <h3>Md Farook</h3>
-                  <h4>Founder & Member</h4>
-                  <div class="row mt-3">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Contact No:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">+91 84336 91426</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Occupation:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">Self Employee</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Permanent Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Vill -  Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Living Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Sion Dharavi, Mumbai Maharashtra</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="{{url('fronted_assets/img/testimonials/danish.png')}}" class="testimonial-img" alt="">
-                  <h3>Md Danish</h3>
-                  <h4>Founder & Member</h4>
-                  <div class="row mt-3">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Contact No:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">+91 91992 18873</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Occupation:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">Machanical Engineer</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Permanent Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Vill -  Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Living Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Telangana,Karnatka</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="{{url('fronted_assets/img/testimonials/ladhale.png')}}" class="testimonial-img" alt="">
-                  <h3>Md. Ladhale</h3>
-                  <h4>Founder & Member</h4>
-                  <div class="row mt-3">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Contact No:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">+91 6205 190 327</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Occupation:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">Business Man</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Permanent Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Vill -  Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Living Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="{{url('fronted_assets/img/testimonials/neyaz.png')}}" class="testimonial-img" alt="">
-                  <h3>Md. Neyaz Ahmad</h3>
+                  <img src="{{url('backend_assets/img/member_profile/'.$usr->profile_img)}}" class="testimonial-img" alt="">
+                  <h3>{{ucwords($usr->fname." ".$usr->lname)}}</h3>
                   <h4>Member</h4>
                   <div class="row mt-3">
                     <div class="col-md-5">
                       <p class="m-0 p-0"><b>Contact No:</b></h6>
+                      </div>
+                      <div class="col-md-7">
+                        <p class="m-0 p-0">{{$usr->contact_no}}</p>
+                      </div>
                     </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">+91 70798 90898</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Occupation:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">Self Employee</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Permanent Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Vill -  Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Living Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Madgaon, Goa</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="{{url('fronted_assets/img/testimonials/ibne.png')}}" class="testimonial-img" alt="">
-                  <h3>Ibne Ali</h3>
-                  <h4>Member</h4>
-                  <div class="row mt-3">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Contact No:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">+91 85789 46282</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Occupation:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0">Safety Officer</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Permanent Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">Vill -  Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118</p>
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-5">
-                      <p class="m-0 p-0"><b>Living Address:</b></h6>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="m-0 p-0 text-justify">--</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
+                    <div class="row mt-2">
+                      <div class="col-md-5">
+                        <p class="m-0 p-0"><b>Occupation:</b></h6>
+                        </div>
+                        <div class="col-md-7">
+                          <p class="m-0 p-0">{{$usr->user_occupation}}</p>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-md-5">
+                          <p class="m-0 p-0"><b>Permanent Address:</b></h6>
+                          </div>
+                          <div class="col-md-7">
+                            <p class="m-0 p-0 text-justify">{{$usr->permanent_address}}</p>
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-5">
+                            <p class="m-0 p-0"><b>Living Address:</b></h6>
+                            </div>
+                            <div class="col-md-7">
+                              <p class="m-0 p-0 text-justify">{{$usr->living_address}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- End testimonial item -->
+                    @endforeach
           </div>
           <div class="swiper-pagination"></div>
         </div>

@@ -28,8 +28,11 @@ class FrontController extends Controller
         $no_of_user = User::select('id','fname','lname')->with('roles')->whereHas('roles',function($query){
             $query->where('type','normal user');
         })->count();
+        $user = User::with('roles')->whereHas('roles',function($query){
+            $query->where('type','member');
+        })->get();
         $no_donation = Donation_payment_details::count();
-        $data = ['no_of_member'=>$no_of_member,'no_donation'=>$no_donation,'no_user'=>$no_of_user];
+        $data = ['no_of_member'=>$no_of_member,'no_donation'=>$no_donation,'no_user'=>$no_of_user,'user'=>$user];
         return view('fronted.index',$data);
     }
     public function about(){
@@ -40,7 +43,10 @@ class FrontController extends Controller
         return view('fronted.ourwork');
     }
     public function our_member(){
-        return view('fronted.our-members');
+        $user['user'] = User::with('roles')->whereHas('roles',function($query){
+            $query->where('type','member');
+        })->get();
+        return view('fronted.our-members',$user);
     }
     public function join_us(){
         $data['state_list'] = State::all();        
