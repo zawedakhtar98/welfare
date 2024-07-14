@@ -60,7 +60,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{url('backend_assets/assets/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
+            <img src="@php echo (session()->has('profile_img') && session('profile_img')) ? url('backend_assets/img/member_profile/'.session('profile_img')) : url('backend_assets/assets/img/profile-img.jpg') @endphp" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ucwords(session('fname'))}}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -116,7 +116,6 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 

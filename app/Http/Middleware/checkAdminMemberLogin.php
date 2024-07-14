@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AlreadySignin
+class checkAdminMemberLogin
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,11 @@ class AlreadySignin
      */
     public function handle(Request $request, Closure $next)
     {
-        // print_r([session('role1'),session('role2'),session('fname'),session('user_id')]);
-        if(session('role1')=='normal user' && session('role1')!='member' && session()->has('role1')){                   
-            return redirect()->route('index');
+        if(session('role1')=='admin' || session('role1')=='member' || session('role2')=='admin'){               
+            // return redirect()->route('member.dashboard');
+        }
+        else if(session('role1')=='normal user' && session()->has('role1')){
+            abort(403);
         }
         return $next($request);
     }

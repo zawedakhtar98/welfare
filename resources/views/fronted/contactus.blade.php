@@ -5,7 +5,7 @@
 @section('main-section')
 
   
-  <main>  
+  <main id="main">  
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact section-bg mt-5">
         <div class="container" data-aos="fade-up">

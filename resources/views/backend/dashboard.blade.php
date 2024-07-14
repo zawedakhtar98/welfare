@@ -1,5 +1,17 @@
 @extends('backend.layout.main')
 @section('title') Dashboard - BR Islamic Admin/Member @endsection
+@section('custom-internal-css')
+<style>
+  .member_amt_currmonth{
+    font-family: sans-serif;
+    background: lightgrey;
+    border-radius: 6px;
+    padding: 10px 32px;
+    font-size: 16px;
+    color: #079f41;
+  }
+</style>
+@endsection
   @section('main-section')
   <main id="main" class="main">
 
@@ -80,16 +92,63 @@
                 </div>
                 </a>
               </div>
-            </div><!-- End Help people Card -->
-            
-
-            
-            
+            </div><!-- End Help people Card -->            
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                      <div class="card-info py-2">
+                        <h5 class="py-3 member_amt_currmonth">These members are given this month amount.</h5>
+                      </div>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th>No</th>                    
+                          <th>Member Name</th>                    
+                          <th>Mobile No</th>                    
+                        </tr>
+                        @php $i=1; @endphp
+                        @foreach ($user_paid_curMonth as $k=>$v)                            
+                        <tr>
+                          <td>{{$i}}</td>
+                          <td>{{ucwords($v->fname." ".$v->lname)}}</td>                    
+                          <td>{{$v->contact_no}}</td>                    
+                        </tr>
+                        @endforeach
+                        @php $i+=1; @endphp
+                      </table>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                      <div class="card-info py-2">
+                        <h5 class="py-3 member_amt_currmonth">These members are not given this month amount.</h5>
+                      </div>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th>No</th>                    
+                          <th>Member Name</th>  
+                          <th>Mobile No</th>                  
+                        </tr>
+                        @php $i=1; @endphp
+                        @foreach ($user_not_paid_curMonth as $k=>$v)                            
+                        <tr>
+                          <td>{{$i}}</td>
+                          <td>{{ucwords($v->fname." ".$v->lname)}}</td>                    
+                          <td>{{$v->contact_no}}</td>                    
+                        </tr>
+                        @php $i+=1; @endphp
+                        @endforeach
+                      </table>
+                    </div>
+                  </div>
+              </div>
+            </div>
           </div>
         </div><!-- End Left side columns -->
-
-        
-
       </div>
     </section>
 

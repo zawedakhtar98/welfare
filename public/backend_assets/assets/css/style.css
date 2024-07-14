@@ -177,6 +177,17 @@ input::-webkit-inner-spin-button {
     border-top: 1px solid #eaedf1;
     border-left: 1px solid #eaedf1;
   }
+  
+  
+}
+
+@media (max-width: 600px) {
+  .skiptranslate.goog-te-gadget {
+    top: 62px !important;
+    position: fixed !important;
+    z-index: 9999 !important;
+    right: 45px !important;
+  }
 }
 
 @keyframes dropdown-animate {
@@ -1222,6 +1233,10 @@ input::-webkit-inner-spin-button {
   .error-404 img {
     max-width: 50%;
   }
+  .skiptranslate.goog-te-gadget{
+    top:62px;
+    right: 45px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -1278,4 +1293,20 @@ td .cancel_icon{
 td .check_icon{
   font-size: 28px;
   cursor: pointer;
+}
+
+/* language selection */
+.skiptranslate.goog-te-gadget{
+  top: 16px;
+  position: fixed;
+  z-index: 9999;
+  right: 180px;
+}
+.skiptranslate.goog-te-gadget span{
+  display: none;
+}
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd.skiptranslate{
+visibility: hidden;
+display: none ;
 }

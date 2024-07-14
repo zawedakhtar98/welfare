@@ -55,7 +55,7 @@
                         <td>{{ucwords($val->fname)}}</td>
                         <td>{{ucwords($val->lname)}}</td>
                         <td>{{ucwords($val->father_name)}}</td>
-                        <th>{{ucwords($val->mother_name)}}</th>
+                        <td>{{ucwords($val->mother_name)}}</td>
                         <td>{{ucwords($val->contact_no)}}</td>
                         <td>{{$val->city->name}}</td>
                         <td>{{$val->state->name}}</td>

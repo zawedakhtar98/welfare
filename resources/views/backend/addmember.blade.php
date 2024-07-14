@@ -36,7 +36,7 @@
                             <span class="text-danger">@error('lname'){{$message}}@enderror</span>
                           </div>                         
                           <div class="col-md-6">
-                            <input type="number" class="form-control" name="contact_no" value="{{old('contact_no')}}" placeholder="Contact No" autocomplete="off">
+                            <input type="number" class="form-control" name="contact_no" value="{{old('contact_no')}}" id="contactno" placeholder="Contact No" autocomplete="off">
                             <span class="text-danger">@error('contact_no'){{$message}}@enderror</span>
                           </div>
                           <div class="col-md-6">
@@ -52,34 +52,38 @@
                             <span class="text-danger">@error('father_name'){{$message}}@enderror</span>
                           </div>
                           <div class="col-md-6">
-                            <input type="text" class="form-control" name="mother_name" value="{{old('mother_name')}}"  placeholder="Mother Name" autocomplete="off">
-                            <span class="text-danger">@error('mother_name'){{$message}}@enderror</span>
+                            <input type="text" class="form-control" value="Self Employee" name="member_occupation" value="{{old('member_occupation')}}"  placeholder="Enter Member Occupation" autocomplete="off">
+                            <span class="text-danger">@error('member_occupation'){{$message}}@enderror</span>
                           </div>
                           <div class="col-md-6">
+                            <input type="text" class="form-control" name="mother_name" value="{{old('mother_name')}}"  placeholder="Mother Name" autocomplete="off">
+                            <span class="text-danger">@error('mother_name'){{$message}}@enderror</span>
+                          </div>                          
+                          <div class="col-md-4">
                             <input class="form-control" type="file" name="profile_image" id="formFile">
                             <span class="text-danger">@error('profile_image'){{$message}}@enderror</span>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <select class="form-control" name="state" id="state">
                               <option value="0" selected>Select State Name</option>
                               @foreach ($state_list as $val)
-                              <option value="{{$val->id}}">{{$val->name}}</option>
+                              <option value="{{$val->id}}" {{($val->name=='Bihar') ? 'selected' : ""}}>{{$val->name}}</option>
                               @endforeach
                             </select>
                             <span class="text-danger">@error('state'){{$message}}@enderror</span>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <select class="form-control" name="city" id="city_list">
                               <option selected>Select City Name</option>                          
                             </select>
                             <span class="text-danger">@error('city'){{$message}}@enderror</span>
                           </div> 
                           <div class="col-md-12">
-                          <textarea class="form-control" name="permanent_address" rows="2" placeholder="Permanent Address">{{old('permanent_address')}}</textarea>
+                          <textarea class="form-control" name="permanent_address" rows="2" placeholder="Permanent Address">Balthi Rasoolpur, Post Sarfuddinpur, Bochahan Muzaffarpur Bihar-843118{{old('permanent_address')}}</textarea>
                           <span class="text-danger">@error('permanent_address'){{$message}}@enderror</span>
                         </div>                        
                         <div class="col-md-12">
-                          <textarea class="form-control" name="living_address" rows="2" placeholder="Living Address">{{old('living_address')}}</textarea>
+                          <textarea class="form-control" name="living_address" rows="2" placeholder="Living Address">-{{old('living_address')}}</textarea>
                           <span class="text-danger">@error('living_address'){{$message}}@enderror</span>
                         </div>
                         <div class="col-md-12 text-center">
@@ -98,26 +102,33 @@
 
 @section('custom-js')
       <script>
+        function getCity(id){
+            let html = '<option value="0" selected>Select City Name</option>';
+              $('#city_list').html(html);
+              $.ajax({
+                url:"{{url('member/city-list')}}",
+                type:'get',
+                data:{state_id:id},
+                success:function(res){
+                  if(Object.keys(res).length === 0){
+                    $('#city_list').html('<option value="0" selected>Select City Name</option><option>No City Found</option>');
+                  }
+                  else{
+                    res.forEach(city => {
+                      html+= `<option value='${city.id}' ${(city.name=='Muzaffarpur') ? 'selected' :''}>${city.name}</option>`;
+                    });
+                    $('#city_list').html(html);                
+                  }
+                }
+              })
+           }
+        $(document).ready(function() {
+           let state = $('#state').find('option:selected').val();
+           getCity(state);
+        });
         $('#state').on('change',function(){
-          let html = '<option value="0" selected>Select City Name</option>';
           let id = $(this).val();
-          $('#city_list').html(html);
-          $.ajax({
-            url:"{{url('member/city-list')}}",
-            type:'get',
-            data:{state_id:id},
-            success:function(res){
-              if(Object.keys(res).length === 0){
-                $('#city_list').html('<option value="0" selected>Select City Name</option><option>No City Found</option>');
-              }
-              else{
-                res.forEach(city => {
-                  html+= `<option value='${city.id}'>${city.name}</option>`;
-                });
-                $('#city_list').html(html);                
-              }
-            }
-          })
+          getCity(id);
         })
 
         setTimeout(function () {
@@ -134,6 +145,27 @@
             success:function(res){
               if(res.success){
                 $('#error_msg').html('<div class="alert alert-danger fs-14 py-2">This email is already exist!</div>');
+                setTimeout(function () {
+                  $('.alert').fadeOut('slow');
+                }, 6000);
+                $('button[type="submit"]').attr('disabled','disabled');
+              }
+              else{
+                $('button[type="submit"]').removeAttr('disabled');
+              }
+            }
+          })
+        })
+        $('#contactno').on('blur',function(){
+          let mobile = $(this).val();
+          let token = $('input[name="_token"]').val();
+          $.ajax({
+            url:"{{url('duplicate-mobile-check')}}",
+            type:'post',
+            data:{mobile:email, _token:token},
+            success:function(res){
+              if(res.success){
+                $('#error_msg').html('<div class="alert alert-danger fs-14 py-2">This mobile is already exist!</div>');
                 setTimeout(function () {
                   $('.alert').fadeOut('slow');
                 }, 6000);

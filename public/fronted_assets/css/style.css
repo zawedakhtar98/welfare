@@ -2232,3 +2232,22 @@ p.design-by{
 .dropdown-toggle::after{
   display: none;
 } 
+
+/* language selection */
+.skiptranslate.goog-te-gadget{
+  top: 7px;
+  position: fixed;
+  z-index: 9999;
+  right: 11px;
+}
+.skiptranslate.goog-te-gadget span{
+  display: none;
+}
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd.skiptranslate{
+visibility: hidden;
+display: none ;
+}
+#testimonials{
+  height: 500px;
+}

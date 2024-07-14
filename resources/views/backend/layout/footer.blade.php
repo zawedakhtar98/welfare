@@ -27,6 +27,16 @@
 
   <!-- Template Main JS File -->
   <script src="{{url('backend_assets/assets/js/main.js')}}"></script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+       new google.translate.TranslateElement({
+          pageLanguage: 'en', layout: 
+          google.translate.TranslateElement.InlineLayout.HORIZONTAL, autoDisplay: 
+          false, includedLanguages: 'en,hi,ur,ar', gaTrack: true, gaId: 'YOUR_API_KEY'
+          }, 'main');
+    }
+ </script>
+ <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   
   @yield('custom-js')
 

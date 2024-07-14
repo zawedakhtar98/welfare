@@ -51,6 +51,15 @@
                           <div class="col-md-6">
                             <input type="number" name="amount" placeholder="Enter Amount" value="{{old('amount')}}" class="form-control">
                             <span class="text-danger">@error('amount'){{$message}}@enderror</span>
+                          </div> 
+                          <div class="col-md-12">
+                            <select class="form-control" name="given_amount_to">
+                              <option selected> Given Amount Of Person Name</option>
+                              @foreach ($list as $val)
+                              <option value="{{ucwords($val->fname.' '.$val->lname)}}">{{ucwords($val->fname)." ".ucwords($val->lname)}}</option>
+                              @endforeach
+                            </select>
+                            <span class="text-danger">@error('given_amount_to'){{$message}}@enderror</span>
                           </div>                
                           
                            <div class="col-md-12 text-center">

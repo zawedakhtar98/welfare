@@ -30,9 +30,10 @@ Route::get('/city-list',[FrontController::class,'get_city_list']);
 Route::get('/contact-us',[FrontController::class,'contact_us']);
 Route::post('/contact-us',[FrontController::class,'save_contactus'])->name('contact-us');
 Route::post('/duplicate-email-check',[FrontController::class,'isUserEmailExist']);
+Route::post('/duplicate-mobile-check',[FrontController::class,'isUserMobileExist']);
 Route::get('/signin',[FrontController::class,'login'])->name('signin')->middleware('alreadysignin');
 Route::post('/check-user',[FrontController::class,'checklogin'])->name('check-user');
-Route::get('/logout',[FrontController::class,'logout']);
+Route::get('/logout',[FrontController::class,'logout'])->name('logout');
 
 Route::get('/thank-you',function(){
     return view('fronted.thankyou');
@@ -52,7 +53,7 @@ Route::get('temp',function(){
 
 
 /**------------ Backend Development start from here -------------**/
-Route::prefix('member')->group(function(){
+Route::prefix('member')->middleware('isAdminMember')->group(function(){
     Route::get('/dashboard',[AdminController::class,'index'])->name('member.dashboard');
     
     //members details
@@ -84,7 +85,7 @@ Route::prefix('member')->group(function(){
     Route::get('/contactus-details',[AdminController::class,'contactus_details'])->name('member.donation-details');
     
     Route::get('/test',[AdminController::class,'debugg'])->name('member.test');
-});
+})  ;
 
 
 /**------------  Backend Development end -------------**/

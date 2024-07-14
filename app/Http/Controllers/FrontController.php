@@ -11,15 +11,26 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Usertype;
+use App\Models\Role_user;
 use App\Models\ContactUs;
+use App\Models\Donation_payment_details;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class FrontController extends Controller
 {
+    
     public function index(){
-        return view('fronted.index');
+        $no_of_member = User::select('id','fname','lname')->with('roles')->whereHas('roles',function($query){
+            $query->where('type','member');
+        })->count();
+        $no_of_user = User::select('id','fname','lname')->with('roles')->whereHas('roles',function($query){
+            $query->where('type','normal user');
+        })->count();
+        $no_donation = Donation_payment_details::count();
+        $data = ['no_of_member'=>$no_of_member,'no_donation'=>$no_donation,'no_user'=>$no_of_user];
+        return view('fronted.index',$data);
     }
     public function about(){
         return view('fronted.about');
@@ -52,34 +63,38 @@ class FrontController extends Controller
             "permanent_address"=>'required',
             "living_address"=>'required'
         ]);
-        
-        $user = new User();
-        $user->fname = $request->fname;
-        $user->lname = $request->lname;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->contact_no);
-        $user->contact_no = $request->contact_no;
-        $user->state_id = $request->state;
-        $user->city_id = $request->city;
-        $user->permanent_address = $request->permanent_address;
-        $user->living_address = $request->living_address;       
+        DB::beginTransaction();              
         try{
+            $user = new User();
+            $user->fname = $request->fname;
+            $user->lname = $request->lname;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->contact_no);
+            $user->contact_no = $request->contact_no;
+            $user->state_id = $request->state;
+            $user->city_id = $request->city;
+            $user->permanent_address = $request->permanent_address;
+            $user->living_address = $request->living_address; 
             $user->save();
             session()->put('fname',$request->fname);
             session()->put('lname',$request->lname);
             session()->put('email',$request->lname);
-            $role = new Role();
-            $user_type = Usertype::where('type','member')->first();
-            $role->user_type_id=$user_type->id;
+            $role = new Role_user();
+            $user_type = Role::where('type','member')->first();
+            $role->role_id=$user_type->id;
             $role->user_id = $user->id;
             $role->save();
+            session()->put('role1','normal user');
+            session()->put('user_id',$user->id);
             $edata['name'] = ucwords($request->fname." ".$request->lname);
             $edata['username'] = $request->email;
             $edata['password'] = $request->contact_no;
             $this->thankyou_email_forjoinus($request->email,$edata);
             // return redirect()->route('joinus')->with('success', "Record inserted successfully!");
+            DB::commit();
             return redirect()->to('thank-you')->with('is_saved','1');
         } catch (\Exception $e){
+            DB::rollBack();
             return redirect()->route('joinus')->with('error', "There was an error inserting the record. ".$e->getMessage());
         }
         
@@ -129,6 +144,7 @@ class FrontController extends Controller
             session()->put('fname',$user[0]->fname);
             session()->put('lname',$user[0]->lname);
             session()->put('email',$user[0]->email);
+            session()->put('profile_img',$user[0]->profile_img);
             session()->put('contact_no',$user[0]->contact_no);
             if(count($user[0]->roles)>1){
                 session()->put('role1',$user[0]->roles[0]->type);
@@ -142,6 +158,7 @@ class FrontController extends Controller
                     return redirect()->route('member.dashboard');
                 }
                 else{
+                    session()->put('role1','normal user');
                     return redirect()->route('index');
                 }
             }            
@@ -152,13 +169,27 @@ class FrontController extends Controller
     }
 
     public function logout(){
-        session()->forget(['fname','lname','email']);
+        session()->forget(['fname','lname','email','role1','role2','user_id','profile_img','contact_no']);
         return redirect()->route('index');
     }
 
     public function isUserEmailExist(Request $request){
         if(!empty($request->email)){            
             if( User::where('email',$request->email)->exists()){
+                return response()->json([
+                    'success' => true,                
+                ], 200);
+            }
+            else{
+                return response()->json(['success' => false],201);
+            }
+            
+        }
+    }
+
+    public function isUserMobileExist(Request $request){
+        if(!empty($request->email)){            
+            if( User::where('contact_no',$request->mobile)->exists()){
                 return response()->json([
                     'success' => true,                
                 ], 200);

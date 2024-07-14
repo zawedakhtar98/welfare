@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Donation_payment_details;
+use App\Models\Role_user;
 use App\Models\Usertype;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,9 +16,11 @@ use App\Models\Payment_screenshot;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
-{
-    private $Sql1;
-    private $Sql2;
+{   
+    // public function __construct()
+    // {
+    //     $this->middleware('isAdminMember');
+    // }
     public function index(){
         $credit_amt = Welfare_transaction::where('transaction_type','credit')->sum('amount');
         $debit_amt = Welfare_transaction::where('transaction_type','debit')->sum('amount');
@@ -26,9 +29,19 @@ class AdminController extends Controller
             $query->where('type','member');
         })->count();
         $no_donation = Donation_payment_details::count();
-        $data = ['avail_bal' =>$avail_bal,'no_of_member'=>$no_of_member,'no_donation'=>$no_donation];
+
+        $user_paid_curMonth = User::whereHas('payment_details', function($query) {
+            $query->whereMonth('payment_date', now()->month)
+                  ->whereYear('payment_date', now()->year);
+        })->get();
+
+        $user_not_paid_curMonth = User::whereDoesntHave('payment_details', function($query) {
+            $query->whereMonth('payment_date', now()->month)
+                  ->whereYear('payment_date', now()->year);
+        })->get();
+                
+        $data = ['avail_bal' =>$avail_bal,'no_of_member'=>$no_of_member,'no_donation'=>$no_donation,'user_paid_curMonth'=>$user_paid_curMonth,'user_not_paid_curMonth'=>$user_not_paid_curMonth];
         return view('backend.dashboard',$data);
-        // dd('slkdfjsklfs');
     }
     
     public function add_member(){
@@ -40,44 +53,46 @@ class AdminController extends Controller
         $request->validate([
             "fname"=>'required',
             "lname"=>'required',
-            "email"=>'required|email|unique:users,email',
             "contact_no"=>'required|unique:users,contact_no|numeric|digits:10',
-            "alternate_contact_no"=>'unique:users,alter_contact_no|numeric|digits:10',
-            'profile_image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'profile_image' => 'mimes:jpeg,png,jpg|max:2048',
             "state"=>'required',
             "city"=>'required',
             "permanent_address"=>'required',
             "living_address"=>'required'
         ]);
-        
-        $user = new User();
-        $user->fname = $request->fname;
-        $user->lname = $request->lname;
-        $user->email = $request->email;
-        $user->father_name = ($request->father_name) ? $request->father_name : "-";
-        $user->mother_name = ($request->mother_name) ? $request->mother_name : "-";
-        //profile upload 
-        $profile_image = time().'.'.$request->profile_image->extension();  
-        $request->profile_image->move(public_path('backend_assets/img/member_profile'), $profile_image);
-        $user->profile_img = $profile_image;
-
-        $user->password = bcrypt($request->contact_no);
-        $user->contact_no = $request->contact_no;
-        $user->alter_contact_no = $request->alternate_contact_no;
-        $user->state_id = $request->state;
-        $user->city_id = $request->city;
-        $user->permanent_address = $request->permanent_address;
-        $user->living_address = $request->living_address;       
+        DB::beginTransaction();
         try{
+            $user = new User();
+            $user->fname = $request->fname;
+            $user->lname = $request->lname;
+            $user->email = $request->email;
+            $user->father_name = ($request->father_name) ? $request->father_name : "-";
+            $user->mother_name = ($request->mother_name) ? $request->mother_name : "-";
+            //profile upload 
+            $profile_image = rand(100,9999).time().'.'.$request->profile_image->extension();  
+            $request->profile_image->move(public_path('backend_assets/img/member_profile'), $profile_image);
+            $user->profile_img = $profile_image;
+    
+            $user->password = bcrypt($request->contact_no);
+            $user->contact_no = $request->contact_no;
+            $user->alter_contact_no = $request->alternate_contact_no;
+            $user->state_id = $request->state;
+            $user->city_id = $request->city;
+            $user->permanent_address = $request->permanent_address;
+            $user->living_address = $request->living_address;       
+            $user->user_occupation = ($request->member_occupation) ? $request->member_occupation : "-";  
             $user->save();
-            $role = new Role();
-            $user_type = Usertype::where('type','member')->first();
-            $role->user_type_id=$user_type->id;
+            $role = new Role_user();
+            $user_type = Role::where('type','member')->first();
+            $role->role_id=$user_type->id;
             $role->user_id = $user->id;
             $role->save();
+            DB::commit();
             return redirect()->route('member.add-member')->with('success', "Record inserted successfully!");
         } catch (\Exception $e){
-            return redirect()->route('member.add-member')->with('error', "Something went wrong!");
+            DB::rollBack();
+            unlink(public_path('backend_assets/img/member_profile/'.$profile_image));
+            return redirect()->route('member.add-member')->with('error', "Something went wrong!".$e->getMessage());
         }
     }
 
@@ -104,17 +119,18 @@ class AdminController extends Controller
         'payment_mode'=>'required',
         'payment_date'=>'required|date',
         'amount'=>'required|numeric',
-       ]);
-
-       $user_pay = new  Users_payment_details();
-       $user_pay->user_id = $request->member_name;
-       $user_pay->amount = $request->amount;
-       $user_pay->payment_mode = $request->payment_mode;
-       $user_pay->transaction_no = mt_rand(1000000000,9999999999);
-       $user_pay->payment_date = $request->payment_date;
-       $user_pay->created_at = Carbon::now();
-       $user_pay->updated_at = Carbon::now();
+       ]); 
+       DB::beginTransaction();
        try{
+        $user_pay = new  Users_payment_details();
+        $user_pay->user_id = $request->member_name;
+        $user_pay->amount = $request->amount;
+        $user_pay->payment_mode = $request->payment_mode;
+        $user_pay->amt_given_to = $request->given_amount_to;
+        $user_pay->transaction_no = mt_rand(1000000000,9999999999);
+        $user_pay->payment_date = $request->payment_date;
+        $user_pay->created_at = Carbon::now();
+        $user_pay->updated_at = Carbon::now();
         $user_pay->save();
 
         $welfare_trans = new  Welfare_transaction();
@@ -128,9 +144,12 @@ class AdminController extends Controller
         $welfare_trans->updated_at = Carbon::now();
         $welfare_trans->save();
 
+        DB::commit();
+
         return redirect()->route('member.add-member-payment')->with('success', "Payment added successfully!");
        }
        catch(\Exception $e){
+        DB::rollback();
             return redirect()->route('member.add-member-payment')->with('error', "Something went wrong! ".$e->getMessage());
        }
     }
@@ -269,7 +288,6 @@ class AdminController extends Controller
                 DB::rollback();
                 return response()->json(['msg'=>"Internal server error! .".$e->getMessage(),'status'=>false],200);
             }
-
         }
         else{
             $mem_scan_pay->remark = $remark;
@@ -300,9 +318,7 @@ class AdminController extends Controller
                 'aadhaar_no'=>'required|numeric',
                 'receiver_image'=>'mimes:jpeg,png,jpg|max:2048',
             ]);
-
-            $receiver_image = time().mt_rand(10000,99999).'.'.$request->receiver_image->extension();  
-            $request->receiver_image->move(public_path('backend_assets/img/donation_people_img'), $receiver_image);
+            $receiver_image ='-';
            
             $credit_amt = Welfare_transaction::where('transaction_type','credit')->sum('amount');
             $debit_amt = Welfare_transaction::where('transaction_type','debit')->sum('amount');
@@ -310,6 +326,10 @@ class AdminController extends Controller
             DB::beginTransaction();
             try{
                 if($request->given_amount < $avail_bal){
+                    if(isset($request->receiver_image) && !empty($request->receiver_image)){
+                        $receiver_image = time().mt_rand(10000,99999).'.'.$request->receiver_image->extension();  
+                        $request->receiver_image->move(public_path('backend_assets/img/donation_people_img'), $receiver_image);
+                    }                    
                     // dd([$request->name,$request->mobile_no,$request->payment_mode,$request->given_amount,$request->address]);
                     $givenby =  User::select('id','fname','lname')->find($request->given_by);
 
@@ -320,7 +340,7 @@ class AdminController extends Controller
                     $welfare_trans->payment_mode = $request->payment_mode;
                     $welfare_trans->description = $request->description." - added by - ".session('fname');
                     $welfare_trans->transaction_type = 'debit';
-                    $welfare_trans->payment_date = Carbon::now();
+                    $welfare_trans->payment_date = Carbon::parse($request->given_date)->format('Y-m-d h:m:s');
                     $welfare_trans->created_at = Carbon::now();
                     $welfare_trans->updated_at = Carbon::now();
                     $welfare_trans->save();  
@@ -349,7 +369,9 @@ class AdminController extends Controller
                 }
                 else{
                     DB::rollback();
-                    unlink(public_path('backend_assets/img/donation_people_img/'.$receiver_image));
+                    if($receiver_image!='-'){
+                        unlink(public_path('backend_assets/img/donation_people_img/'.$receiver_image));
+                    }
                     return redirect()->route('member.addnew-donation')->with('error',"Given Amount should less than avail amount. Avail amount is ".$avail_bal);
                 }
             }
@@ -372,9 +394,17 @@ class AdminController extends Controller
 
     public function debugg(){ 
         
-       return $no_donation = Donation_payment_details::count();
-         
+        $user_paid_curMonth = User::whereHas('payment_details', function($query) {
+            $query->whereMonth('payment_date', now()->month)
+                  ->whereYear('payment_date', now()->year);
+        })->get();
 
+        $user_not_paid_curMonth = User::whereDoesntHave('payment_details', function($query) {
+            $query->whereMonth('payment_date', now()->month)
+                  ->whereYear('payment_date', now()->year);
+        })->get();
+        $data = ['not'=>$user_not_paid_curMonth,'yes'=>$user_paid_curMonth];
+        return $user_profile = User::select('id','fname','lname','profile_img')->find(session('user_id'));;
     }
     
 }

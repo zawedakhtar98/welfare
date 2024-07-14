@@ -5,7 +5,7 @@
 @section('main-section')
 
   
-  <main>  
+  <main id="main">  
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact section-bg mt-5">        
         <div class="container h-100">         
@@ -20,16 +20,16 @@
 
                     @csrf
                     
-                    <h4 class="text-center sign-in">Sign In </h4>  
+                    <h4 class="text-center sign-in">Log In </h4>  
                     <div class="row mt-3">
                       <div class="col-md-12 form-group">
-                        <input type="text" name="username" value="{{old('username')}}" class="form-control" id="username" placeholder="Enter your email.." autocomplete="off">
+                        <input type="text" name="username" value="{{old('username')}}" class="form-control" id="username" placeholder="Enter your email or mobile" autocomplete="off">
                         <span class="text-danger">@error('username'){{$message}}@enderror</span>
                       </div>                      
                     </div>  
                     <div class="row mt-3">
                       <div class="col-md-12 form-group">
-                        <input type="password" class="form-control" name="password" value="{{old('password')}}" placeholder="Enter your password" autocomplete="off">
+                        <input type="password" class="form-control" name="password" value="{{old('password')}}" placeholder="Enter your password " autocomplete="off">
                         <a href="#" class="forgot-pass">Forgot Password?</a>
                         <span class="text-danger">@error('password'){{$message}}@enderror</span>
                       </div>

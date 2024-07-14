@@ -5,7 +5,7 @@
 @section('main-section')
 
   
-  <main>  
+  <main id="main">  
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact section-bg mt-5">
         {{-- <div class="container" data-aos="fade-up">
@@ -74,7 +74,7 @@
                     </div>
                     <div class="text-center mt-3">
                       <button type="submit" class="btn btn-bg-primary text-light fs-14 btn-hover">Submit Form</button>
-                      <button type="reset" class="btn btn-bg-seconday text-light fs-14">Reset Forn</button>                     
+                      <button type="reset" class="btn btn-bg-seconday text-light fs-14">Reset Form</button>                     
                       <p class="not-join-text">Already have an account <a href="{{url('signin')}}">Sign In</a></p>                      
                     </div>
                   </form>

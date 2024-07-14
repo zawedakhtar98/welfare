@@ -64,9 +64,10 @@
                         <th scope="col">#</th>
                         <th scope="col">Member Name</th>
                         <th scope="col">Father Name</th>
-                        <th scope="col">Mother Name</th>
+                        {{-- <th scope="col">Mother Name</th> --}}
                         <th scope="col">Amount</th>
                         <th scope="col">Amount Given To</th>
+                        <th scope="col">Amount Deposited To</th>
                         <th scope="col">Payment Mode</th>
                         <th scope="col">Transaction Number</th>
                         <th scope="col">Payment Date</th>
@@ -82,9 +83,10 @@
                         <td>{{$i}}</td>
                         <td>{{ucwords($dtl->user->fname." ".$dtl->user->lname)}}</td>
                         <td>{{($dtl->user->father_name) ? $dtl->user->father_name : '-'}}</td>
-                        <td>{{($dtl->user->mother_name) ? $dtl->user->mother_name : '-'}}</td>
+                        {{-- <td>{{($dtl->user->mother_name) ? $dtl->user->mother_name : '-'}}</td> --}}
                         <td>{{$dtl->amount}}</td>
                         <td>{{($dtl->amt_given_to) ? $dtl->amt_given_to : '-'}}</td>
+                        <td>Md Danish</td>
                         <td>{{$dtl->payment_mode}}</td>
                         <td>{{$dtl->transaction_no}}</td>
                         <td>{{date('d-m-Y',strtotime($dtl->payment_date))}}</td>

@@ -79,7 +79,7 @@
 @endsection
 
 @section('main-section')
-
+<main id="main">
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -537,17 +537,17 @@
       <div class="container">
         <div class="row">
             <div class="four col-md-4 col-4 col-sm-4">
-                <div class="counter-box"> <i class="bx bxs-group"></i><span class="counter">33</span>
+                <div class="counter-box"> <i class="bx bxs-group"></i><span class="counter">{{($no_of_member) ? $no_of_member : 0}}</span>
                     {{-- <p>Total Members</p> --}}
                 </div>
             </div>
             <div class="four col-md-4 col-4 col-sm-4">
-                <div class="counter-box"><i class="bx bxs-user-plus"></i><span class="counter">10</span>
+                <div class="counter-box"><i class="bx bxs-user-plus"></i><span class="counter">{{($no_user) ? $no_user : 0}}</span>
                     {{-- <p>Total Users</p> --}}
                 </div>
             </div>
             <div class="four col-md-4 col-4 col-sm-4">
-                <div class="counter-box"> <i class="bx bxs-donate-heart"></i><span class="counter">0</span>
+                <div class="counter-box"> <i class="bx bxs-donate-heart"></i><span class="counter">{{($no_donation) ? $no_donation : 0}}</span>
                     {{-- <p>Helped People</p> --}}
                 </div>
             </div>
@@ -555,9 +555,10 @@
     </div>
     </section><!-- End Counts Section -->
    
-  @endsection 
+  @endsection
+  </main> 
   @section('custom-js')
-  <script>
+  <script>  
     $(document).ready(function() {
 
       $('.counter').each(function () {

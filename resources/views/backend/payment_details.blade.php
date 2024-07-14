@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                 <div class="card-title">
-                  <h5 class="text-end">Total Balance: <strong>{{$balance}}</strong></h5>
+                  <h5 class="text-end">Available Balance: <strong><i class='bx bx-rupee'></i>{{$balance}}</strong></h5>
                   <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                     </div>

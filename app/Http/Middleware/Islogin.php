@@ -16,9 +16,9 @@ class Islogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->has('email')){
-            return $next($request);
+        if(session()->has('email') && session()->has('role1') && session('role')=='normal user'){
+            return redirect()->route('index');
         }
-        return redirect()->route('index');
+        abort(403);
     }
 }

@@ -20,7 +20,7 @@ class User extends Authenticatable
     }
 
     public function usertype(){
-        return $this->belongsTo(Usertype::class);
+        return $this->belongsTo(Role_user::class);
     }
     public function city(){
         return $this->belongsTo(City::class);
@@ -30,8 +30,7 @@ class User extends Authenticatable
     }
     public function payment_details(){
         return $this->hasMany(Users_payment_details::class);
-    }
-    
+    }    
     //member payment screenshot details 
     public function payment_screenshot(){
         return $this->hasMany(Payment_screenshot::class,"member_id");
