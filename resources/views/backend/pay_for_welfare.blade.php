@@ -23,9 +23,12 @@
         <div class="col-md-12">          
             <div class="card"> 
               <div class="card-body">
-              <div class="py-2 mt-5 w-100">
+                <div class="py-2 mt-5 w-100">
                   <p class="info"><strong class="text-danger">Note:</strong> Please upload the screenshot after depositing the amount.Click on this <a href="{{url('member/upload-screenshot')}}">link</a> for  upload screenshot.</p>
                   <p class="info"><strong class="text-danger">Note:</strong> बराये मेहरबान पैसा डालने के बाद स्क्रीनशॉट अपलोड कीजिये. स्क्रीनशॉट अपलोड करने के लिए इस <a href="{{url('member/upload-screenshot')}}">लिंक </a>पर क्लिक करे.</p>
+                </div>
+                <div class="">
+                  <p class="info"><a href="{{url('backend_assets/img/scanner/scanner.jpg')}}" target='__blank' download>Download Scanner</a></p>
                 </div>
                 <div class="text-center py-3">
                   <img src="{{url('backend_assets/img/scanner/scanner.jpg')}}" class="rounded-circle scanner-img" alt="...">   

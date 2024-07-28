@@ -31,16 +31,14 @@
 
 <body>
   <header id="header" class="fixed-top">
-   
     <div class="container">
       <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="/"> <img src="{{url('fronted_assets/img/slide/BR-logo1.png')}}"  class="d-inline-block align-top img-fluid" alt=""></a>
-        <span class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> 
-          <i class='bx bx-menu'></i>
-          <i class='bx bx-x'></i>
-        </span>
-        <div class="collapse navbar-collapse justify-content-lg-end" id="navbarNav">
-            <ul class="navbar-nav mr-auto">     
+       <em class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </em>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">     
               @php
                   $url = Route::current();
                   $curr_url = trim($url->uri);

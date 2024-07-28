@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\CacheController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\AdminController;
 use App\Models\Usertype;
@@ -29,8 +30,8 @@ Route::post('/save-member-user',[FrontController::class,'join_register']);
 Route::get('/city-list',[FrontController::class,'get_city_list']);
 Route::get('/contact-us',[FrontController::class,'contact_us']);
 Route::post('/contact-us',[FrontController::class,'save_contactus'])->name('contact-us');
-Route::post('/duplicate-email-check',[FrontController::class,'isUserEmailExist']);
-Route::post('/duplicate-mobile-check',[FrontController::class,'isUserMobileExist']);
+Route::post('/duplicate-email-c
+k',[FrontController::class,'isUserMobileExist']);
 Route::get('/signin',[FrontController::class,'login'])->name('signin')->middleware('alreadysignin');
 Route::post('/check-user',[FrontController::class,'checklogin'])->name('check-user');
 Route::get('/logout',[FrontController::class,'logout'])->name('logout');
@@ -45,9 +46,13 @@ Route::get('islamic',function(){
 });
 
 Route::get('temp',function(){
-    $user_type = Usertype::where('type','member')->first();
+    $user_type = Role::where('type','member')->first();
     echo $user_type->id;
 });
+
+Route::get('/forbidden', function () {
+    return view('page-not-auth');
+})->name('forbidden');
 
 /**--------- Front web site logic start from here -------------**/    
 
@@ -85,7 +90,9 @@ Route::prefix('member')->middleware('isAdminMember')->group(function(){
     Route::get('/contactus-details',[AdminController::class,'contactus_details'])->name('member.donation-details');
     
     Route::get('/test',[AdminController::class,'debugg'])->name('member.test');
-})  ;
+});
+
+Route::get('/clear-caches', [CacheController::class, 'clearAllCaches']);
 
 
 /**------------  Backend Development end -------------**/

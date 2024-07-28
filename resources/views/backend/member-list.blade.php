@@ -31,8 +31,7 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Father Name</th>
                         <th scope="col">Mother Name</th>
                         <th scope="col">Contact No</th>
@@ -52,8 +51,7 @@
                       @foreach ($list as $val)                                                
                       <tr>
                         <th scope="row">{{$i}}</th>
-                        <td>{{ucwords($val->fname)}}</td>
-                        <td>{{ucwords($val->lname)}}</td>
+                        <td>{{ucwords($val->fname." ".$val->lname)}}</td>
                         <td>{{ucwords($val->father_name)}}</td>
                         <td>{{ucwords($val->mother_name)}}</td>
                         <td>{{ucwords($val->contact_no)}}</td>

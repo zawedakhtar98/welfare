@@ -186,6 +186,11 @@
               <i class='bx bx-rupee' ></i><span>Member Payment Details</span>
             </a>
           </li>
+          <li>
+            <a href="{{url('member/verify-payments')}}">
+              <i class='bx bx-rupee' ></i><span>Verify Member Payment</span>
+            </a>
+          </li>
         </ul>
       </li>
       <li class="nav-item">

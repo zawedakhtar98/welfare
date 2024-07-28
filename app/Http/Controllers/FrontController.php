@@ -154,8 +154,9 @@ class FrontController extends Controller
             session()->put('contact_no',$user[0]->contact_no);
             if(count($user[0]->roles)>1){
                 session()->put('role1',$user[0]->roles[0]->type);
-                session()->put('role2',$user[0]->roles[1]->type);                
-                return redirect()->route('member.dashboard');// admin dashboard
+                session()->put('role2',$user[0]->roles[1]->type);  
+                $this->middleware('isAdminMember');              
+                // return redirect()->route('member.dashboard');// admin dashboard
             }
             else{
                 //if role is member

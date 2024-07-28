@@ -103,15 +103,15 @@
         <div class="carousel-item" style="background-image: url({{url('fronted_assets/img/banner/slide-1.jpg')}})">
           <div class="carousel-container">
             <div class="container">
-              <h2 class="animate__animated animate__fadeInDown">Front View Of Jama Masjid</h2>
-              <p class="animate__animated animate__fadeInUp">This is our village Jama Masjid and this is front view. </p>
+              {{-- <h2 class="animate__animated animate__fadeInDown">Front View Of Jama Masjid</h2> --}}
+              {{-- <p class="animate__animated animate__fadeInUp">This is our village Jama Masjid and this is front view. </p> --}}
               {{-- <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Read More</a> --}}
             </div>
           </div>
         </div>
 
         <!-- Slide 3 -->
-        <div class="carousel-item" style="background-image: url({{url('fronted_assets/img/banner/slide-2.jpg')}})">
+        <!-- <div class="carousel-item" style="background-image: url(url('fronted_assets/img/banner/slide-2.jpg')}})">
           <div class="carousel-container">
             <div class="container">
               <h2 class="animate__animated animate__fadeInDown">Inner View Of Jama Masjid</h2>
@@ -120,19 +120,20 @@
             </div>
           </div>
         </div>
+         -->
 
         <!-- Slide 4 -->
-        <div class="carousel-item" style="background-image: url({{url('fronted_assets/img/banner/slide-3.jpg')}})">
+        {{-- <div class="carousel-item" style="background-image: url({{url('fronted_assets/img/banner/slide-3.jpg')}})">
           <div class="carousel-container">
             <div class="container">
               <h2 class="animate__animated animate__fadeInDown">Madarsa Rafaqat Uloom</h2>
-              <p class="animate__animated animate__fadeInUp">This is our village Madarsha and here above 30 children studing of Hafizul Quran.</p>
+              <p class="animate__animated animate__fadeInUp">This is our village Madarsha and here above 30 children studing of Hafizul Quran.</p> --}}
               {{-- <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Read More</a> --}}
-            </div>
+            {{-- </div>
           </div>
-        </div>
+        </div> --}}
 
-      </div>
+      {{-- </div> --}}
 
       <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
         <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>

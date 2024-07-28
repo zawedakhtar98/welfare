@@ -178,7 +178,12 @@ input::-webkit-inner-spin-button {
     border-left: 1px solid #eaedf1;
   }
   
-  
+}
+@media(max-width:768px){
+  .scanner-img{
+    width: 26vh !important;
+    height: 26vh !important;
+  }
 }
 
 @media (max-width: 600px) {
