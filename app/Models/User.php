@@ -15,12 +15,11 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public function roles(){
-        // return $this->belongsToMany(Role::class,'user_role','user_id','role_id');
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
     public function usertype(){
-        return $this->belongsTo(Role_user::class);
+        return $this->belongsTo(Role::class);
     }
     public function city(){
         return $this->belongsTo(City::class);

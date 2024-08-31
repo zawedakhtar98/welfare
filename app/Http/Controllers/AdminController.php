@@ -14,6 +14,7 @@ use App\Models\Users_payment_details;
 use App\Models\Welfare_transaction;
 use App\Models\Payment_screenshot;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {   
@@ -394,17 +395,12 @@ class AdminController extends Controller
 
     public function debugg(){ 
         
-        $user_paid_curMonth = User::whereHas('payment_details', function($query) {
-            $query->whereMonth('payment_date', now()->month)
-                  ->whereYear('payment_date', now()->year);
-        })->get();
-
-        $user_not_paid_curMonth = User::whereDoesntHave('payment_details', function($query) {
-            $query->whereMonth('payment_date', now()->month)
-                  ->whereYear('payment_date', now()->year);
-        })->get();
-        $data = ['not'=>$user_not_paid_curMonth,'yes'=>$user_paid_curMonth];
-        return $user_profile = User::select('id','fname','lname','profile_img')->find(session('user_id'));;
+    //    dd(Auth::user());
+    return Hash::make("zawed@#156");
     }
     
 }
+
+
+//$2y$10$Odr3xBcZQgBZ.hGRYOffZOjBydNnu5V4VmBkzcnc8RETafu5RMdV6 - danish mobile
+// $2y$10$EIXVrb9qEyXejbLt4f1pl.gYchaZETEskh2SiuO2U8kX8Dfo6KCTW - zawed mobie

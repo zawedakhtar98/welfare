@@ -61,17 +61,15 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="@php echo (session()->has('profile_img') && session('profile_img')) ? url('backend_assets/img/member_profile/'.session('profile_img')) : url('backend_assets/assets/img/profile-img.jpg') @endphp" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ucwords(session('fname'))}}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ucwords(Auth::user()->fname)}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>{{ucwords(session('fname') . " ".session('lname'))}}</h6>
+              <h6>{{ucwords(Auth::user()->fname . " ".Auth::user()->lname)}}</h6>
               <span>@php
-                  if(session()->has('role1') && session()->has('role2')){
-                    echo ucwords(session('role1')." & ".session('role2'));
-                  }else{
-                    echo ucwords(session('role1'));
+                  if(session()->has('role')){
+                    echo ucwords(session('role'));
                   }
               @endphp</span>
             </li>

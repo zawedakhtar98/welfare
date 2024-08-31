@@ -16,11 +16,8 @@ class checkAdminMemberLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!session()->has('role1') && !session()->has('role2')){   
-            return  redirect()->route('signin')->with('error',"Your session has expired!");
-        }
-        else if(session('role1')=='normal user' && session()->has('role1')){
-            abort(403);
+        if(session()->has('role') && session('role')!=='admin'){   
+            abort(403,"You don`t have access of this page.");
         }
         return $next($request);
     }

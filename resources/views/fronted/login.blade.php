@@ -1,6 +1,13 @@
 @extends('fronted.layout.main')
 
 @section('title') Sign In @endsection
+@section('custom-internal-css')
+<style>
+  .bg-white.founder{
+    display: none;
+  }
+</style>
+@endsection
 
 @section('main-section')
 

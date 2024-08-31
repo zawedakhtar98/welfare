@@ -17,7 +17,7 @@ class AlreadySignin
     public function handle(Request $request, Closure $next)
     {
         // print_r([session('role1'),session('role2'),session('fname'),session('user_id')]);
-        if(session('role1')=='normal user' && session('role1')!='member' && session()->has('role1')){                   
+        if(session('role')=='normal user' && session('role')!='member' && session()->has('role')){                   
             return redirect()->route('index');
         }
         return $next($request);

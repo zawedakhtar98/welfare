@@ -17,6 +17,7 @@ use App\Models\Donation_payment_details;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
 {
@@ -141,34 +142,22 @@ class FrontController extends Controller
     public function checklogin(Request $request){
         // dd($request);
         $request->validate(['username'=>'required','password'=>'required']);
-        $username= $request->username;
-        $password= $request->password;
+        $username = $request->input('username');
+        $password = $request->input('password');
 
-        $user = User::with('roles')->where('email',$username)->orWhere('contact_no',$username)->get();         
-        if($user && Hash::check($password,$user[0]->password)){
-            session()->put('user_id',$user[0]->id);
-            session()->put('fname',$user[0]->fname);
-            session()->put('lname',$user[0]->lname);
-            session()->put('email',$user[0]->email);
-            session()->put('profile_img',$user[0]->profile_img);
-            session()->put('contact_no',$user[0]->contact_no);
-            if(count($user[0]->roles)>1){
-                session()->put('role1',$user[0]->roles[0]->type);
-                session()->put('role2',$user[0]->roles[1]->type);  
-                $this->middleware('isAdminMember');              
-                // return redirect()->route('member.dashboard');// admin dashboard
+        $fieldType = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'contact_no';
+            if (Auth::attempt([$fieldType => $username, 'password' => $password])) {
+                $user = Auth::user();
+                $roles = $user->roles->pluck('type')->toArray();      
+            if (in_array('admin', $roles)) {
+                session()->put('role','admin');
+                return redirect()->route('member.dashboard');
+            } elseif (in_array('member', $roles)) {
+                session()->put('role','member');
+                return redirect()->route('member.dashboard');
             }
-            else{
-                //if role is member
-                if($user[0]->roles[0]->type=='member'){
-                    session()->put('role1',$user[0]->roles[0]->type);
-                    return redirect()->route('member.dashboard');
-                }
-                else{
-                    session()->put('role1','normal user');
-                    return redirect()->route('index');
-                }
-            }            
+            session()->put('role','normal user');
+            return redirect()->route('index');           
         }
         else{
             return redirect()->route('signin')->with('error',"Invalid credentials!");
@@ -176,7 +165,7 @@ class FrontController extends Controller
     }
 
     public function logout(){
-        session()->forget(['fname','lname','email','role1','role2','user_id','profile_img','contact_no']);
+        Auth::logout();
         return redirect()->route('index');
     }
 

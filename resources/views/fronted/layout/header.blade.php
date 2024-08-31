@@ -47,12 +47,12 @@
                 <li><a class="nav-link {{($curr_url=='about-us') ? 'active' :''}}" href="{{url('about-us')}}">About Us</a></li>
                 <li><a class="nav-link {{($curr_url=='our-work') ? 'active' :''}}" href="{{url('our-work')}}">Our Work</a></li>
                 <li><a class="nav-link {{($curr_url=='our-members') ? 'active' :''}}" href="{{url('our-members')}}">Our Members</a></li>                
-                @if (!session('email'))
+                @if (!Auth::check())
                 <li><a class="nav-link {{($curr_url=='joinus') ? 'active' :''}}" href="{{url('joinus')}}">Join Us</a></li>                    
                 <li><a class="nav-link {{($curr_url=='signin') ? 'active' :''}}" href="{{url('signin')}}">Sign In</a></li>                              
                 <li><a class="nav-link {{($curr_url=='contact-us') ? 'active' :''}}" href="{{url('contact-us')}}">Contact Us</a></li>
                 @endif
-                @if (session('email'))                                    
+                @if (Auth::check())                                  
                 <li class="nav-item dropdown other-device-user-icon">
                   <a class="nav-link dropdown-toggle align-items-center" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
                     <span><img src="{{url('fronted_assets/img/profile/profile.jpg')}}" class="rounded-circle" height="36"alt="Portrait of a Woman"loading="lazy"/><span class="user-name">{{ucwords(session('fname'))}}</span> </span>

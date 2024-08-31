@@ -12,10 +12,7 @@ class Role extends Model
     protected $fillable  = ['type']; 
 
     public function users(){
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id');
     }
-
-    public function usertype(){
-        return $this->hasMany(Usertype::class);
-    }
+    
 }

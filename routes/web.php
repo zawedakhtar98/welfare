@@ -58,12 +58,13 @@ Route::get('/forbidden', function () {
 
 
 /**------------ Backend Development start from here -------------**/
-Route::prefix('member')->middleware('isAdminMember')->group(function(){
+// Route::prefix('member')->middleware('isAdminMember')->group(function(){
+Route::prefix('member')->group(function(){
     Route::get('/dashboard',[AdminController::class,'index'])->name('member.dashboard');
     
     //members details
-    Route::get('/add-member',[AdminController::class,'add_member'])->name('member.add-member');
-    Route::post('/save-member',[AdminController::class,'save_member']);
+    Route::get('/add-member',[AdminController::class,'add_member'])->middleware('isAdminMember')->name('member.add-member');
+    Route::post('/save-member',[AdminController::class,'save_member'])->middleware('isAdminMember');
     Route::get('/city-list',[AdminController::class,'get_city_list'])->name('member.city-list');
     Route::get('/member-list',[AdminController::class,'member_list'])->name('member.member-list');
     
@@ -71,20 +72,20 @@ Route::prefix('member')->middleware('isAdminMember')->group(function(){
     Route::get('/pay-for-welfare',[AdminController::class,'pay_for_welfare'])->name('member.pay-for-welfare');
     Route::get('/upload-screenshot',[AdminController::class,'upload_screenshot'])->name('member.upload-screenshot');
     Route::post('/upload-screenshot',[AdminController::class,'save_screenshot'])->name('member.upload-screenshot');
-    Route::get('/verify-payments',[AdminController::class,'verify_member_payment'])->name('member.verify-payments');
-    Route::post('/verify-payments',[AdminController::class,'checked_member_payment_via_scan'])->name('member.verify-payments');
+    Route::get('/verify-payments',[AdminController::class,'verify_member_payment'])->middleware('isAdminMember')->name('member.verify-payments');
+    Route::post('/verify-payments',[AdminController::class,'checked_member_payment_via_scan'])->middleware('isAdminMember')->name('member.verify-payments');
    
     //welfare payment details
     Route::get('/member-payment-details',[AdminController::class,'member_payment_details'])->name('member.member-payment-details');
-    Route::get('/add-member-payment',[AdminController::class,'add_member_payment'])->name('member.add-member-payment');
-    Route::post('/save-member-payment',[AdminController::class,'save_member_payment'])->name('member.save-member-payment');
+    Route::get('/add-member-payment',[AdminController::class,'add_member_payment'])->middleware('isAdminMember')->name('member.add-member-payment');
+    Route::post('/save-member-payment',[AdminController::class,'save_member_payment'])->middleware('isAdminMember')->name('member.save-member-payment');
     Route::get('/my-payment-details',[AdminController::class,'my_payment_details'])->name('member.my-payment-details');//this route will return the data of specific member or login member
     Route::get('/payment-details',[AdminController::class,'welfare_payment_details'])->name('member.payment-details');
    
     //donation details
     Route::get('/donation-details',[AdminController::class,'donation_details'])->name('member.donation-details');
-    Route::get('/addnew-donation',[AdminController::class,'add_new_donation_details'])->name('member.addnew-donation');
-    Route::post('/addnew-donation',[AdminController::class,'save_new_donation_details'])->name('member.addnew-donation');
+    Route::get('/addnew-donation',[AdminController::class,'add_new_donation_details'])->middleware('isAdminMember')->name('member.addnew-donation');
+    Route::post('/addnew-donation',[AdminController::class,'save_new_donation_details'])->middleware('isAdminMember')->name('member.addnew-donation');
 
     Route::get('/users-details',[AdminController::class,'users_details'])->name('member.donation-details');
     Route::get('/contactus-details',[AdminController::class,'contactus_details'])->name('member.donation-details');
